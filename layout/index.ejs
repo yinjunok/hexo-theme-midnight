@@ -1,0 +1,21 @@
+<%- partial('_partial/header') %>
+<% page.posts.each(function(post){ %>
+  <h2 itemprop="name">
+    <a href="<%- url_for(post.path) %>" itemprop="url"><%= post.title %></a>
+  </h2>
+  <%- post.description %>
+  <p style="margin: .5em 0">
+    <time datetime="<%= date_xml(post.date) %>" itemprop="datePublished"><%= date(post.date) %></time>
+  </p>
+  <hr />
+<% }) %>
+
+<% if (page.total > 1){ %>
+  <nav id="page-nav">
+    <% var prev_text = __('prev');var next_text = __('next') %>
+    <%- paginator({
+      prev_text: prev_text,
+      next_text: next_text
+    }) %>
+  </nav>
+<% } %>

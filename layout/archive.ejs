@@ -1,0 +1,32 @@
+<% var last; %>
+<%- partial('_partial/header') %>
+<% page.posts.each(function(post, i){ %>
+  <% var year = post.date.year(); %>
+  <% if (last != year){ %>
+    <% if (last != null){ %>
+      </div></section>
+    <% } %>
+    <% last = year; %>
+    <section>
+      <p class="year">
+        <%= year %>
+      </div>
+    </p>
+  <% } %>
+  <p class="archives">
+    <a href="<%- url_for(post.path) %>" itemprop="url">
+      <%= post.title %>
+    </a>
+    <time datetime="<%= date_xml(post.date) %>" itemprop="datePublished"><%= date(post.date, 'MM-DD') %></time>
+  </p>
+<% }) %>
+
+<% if (page.total > 1){ %>
+  <nav id="page-nav">
+    <% var prev_text = __('prev');var next_text = __('next')%>
+    <%- paginator({
+      prev_text: prev_text,
+      next_text: next_text
+    }) %>
+  </nav>
+<% } %>
